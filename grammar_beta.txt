@@ -1,0 +1,70 @@
+program -> compUnit
+compUnit -> decl compUnit
+compUnit -> funcDef compUnit
+compUnit -> $
+decl -> constDecl
+decl -> varDecl
+funcDef -> funcType IDN ( funcFParams ) block
+constDecl -> const bType constDef argConst ;
+varDecl -> bType varDef argVarDecl ;
+funcType -> void
+funcFParams -> funcFParam argFunctionF
+funcFParams -> $
+block -> { blockItem }
+bType -> int
+constDef -> IDN = constInitVal
+argConst -> , constDef argConst
+argConst -> $
+varDef -> IDN argVarDef
+argVarDecl -> , varDef argVarDecl
+argVarDecl -> $
+funcFParam -> int IDN
+argFunctionF -> , funcFParam argFunctionF
+argFunctionF -> $
+blockItem -> const bType constDef argConst ; blockItem
+blockItem -> stmt blockItem
+blockItem -> $
+blockItem -> int varDef argVarDecl ; blockItem
+constInitVal -> constExp
+argVarDef -> = initVal
+argVarDef -> $
+stmt -> exp ;
+stmt -> ;
+stmt -> { blockItem }
+stmt -> return argExp ;
+constExp -> assignExp
+initVal -> exp
+exp -> assignExp
+argExp -> exp
+argExp -> $
+assignExp -> eqExp assignExpAtom
+eqExp -> relExp eqExpAtom
+assignExpAtom -> = eqExp assignExpAtom
+assignExpAtom -> $
+relExp -> addExp relExpAtom
+eqExpAtom -> == relExp eqExpAtom
+eqExpAtom -> != relExp eqExpAtom
+eqExpAtom -> $
+addExp -> mulExp addExpAtom
+relExpAtom -> < addExp relExpAtom
+relExpAtom -> > addExp relExpAtom
+relExpAtom -> <= addExp relExpAtom
+relExpAtom -> >= addExp relExpAtom
+relExpAtom -> $
+mulExp -> unaryExp mulExpAtom
+addExpAtom -> + mulExp addExpAtom
+addExpAtom -> - mulExp addExpAtom
+addExpAtom -> $
+unaryExp -> INT
+unaryExp -> IDN callFunc
+mulExpAtom -> * unaryExp mulExpAtom
+mulExpAtom -> / unaryExp mulExpAtom
+mulExpAtom -> % unaryExp mulExpAtom
+mulExpAtom -> $
+callFunc -> ( funcRParams )
+callFunc -> $
+funcRParams -> exp argFunctionR
+funcRParams -> $
+argFunctionR -> , funcRParam argFunctionR
+argFunctionR -> $
+funcRParam -> exp
